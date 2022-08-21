@@ -1,0 +1,29 @@
+ public static List<List<Integer>> groupSort(List<Integer> arr) {
+    // Write your code here
+    HashMap<Integer,Integer> map=new HashMap<>();
+    for(int i=0;i<arr.size();i++)
+    {
+        map.put(arr.get(i),map.getOrDefault(arr.get(i),0)+1);
+    }
+    Integer a[]=map.keySet().toArray(new Integer[0]);
+    
+    Arrays.sort(a,new Comparator<Integer>()
+    {
+        @Override
+        public int compare(Integer a,Integer b)
+        {
+            return map.get(a)==map.get(b)?Integer.compare(a,b):Integer.compare(map.get(b),map.get(a));
+        }
+    });
+    List<List<Integer>> ans=new ArrayList();
+    for(int i=0;i<a.length;i++)
+    {
+        List<Integer> list=new ArrayList();
+        list.add(a[i]);
+        list.add(map.get(a[i]));
+        ans.add(list);
+    }
+      return ans;
+    }
+
+}
