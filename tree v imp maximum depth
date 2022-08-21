@@ -1,0 +1,37 @@
+//https://leetcode.com/problems/maximum-width-of-binary-tree/
+class Solution {
+    public int widthOfBinaryTree(TreeNode root) {
+        int ans=0;
+        Queue<Pair<TreeNode,Integer>> queue=new LinkedList();
+        if(root==null)
+            return 0;
+        queue.add(new Pair(root,0));
+        while(!queue.isEmpty())
+        {
+            int size=queue.size();
+            int min=queue.peek().getValue();
+            int first=0;
+            int last=0;
+            for(int i=0;i<size;i++)
+            {
+                int curr=queue.peek().getValue()-min;
+                TreeNode temp=queue.peek().getKey();
+                queue.poll();
+                if(i==0)
+                    first=curr;
+                if(i==size-1)
+                    last=curr;
+                if(temp.left!=null)
+                {
+                    queue.add(new Pair(temp.left,2*curr+1));
+                }
+                if(temp.right!=null)
+                {
+                    queue.add(new Pair(temp.right,2*curr+2));
+                }
+            }
+            ans=Math.max(ans,last-first+1);
+        }
+        return ans;
+    }
+}
